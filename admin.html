@@ -13,7 +13,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      flex-direction: column; /* Ensure content stacks vertically */
+      flex-direction: column;
     }
 
     .login-container {
@@ -23,7 +23,7 @@
       padding: 30px;
       text-align: center;
       width: 400px;
-      margin-bottom: 20px; /* Add space between login and table */
+      margin-bottom: 20px;
     }
 
     .login-section label {
@@ -31,7 +31,7 @@
       margin-bottom: 10px;
       font-weight: bold;
       color: #555;
-      text-align: center; /* Center the label */
+      text-align: center;
     }
 
     .login-section input {
@@ -42,13 +42,13 @@
       margin-bottom: 20px;
       font-size: 16px;
       color: #333;
-      text-align: center; /* Center the input text */
+      text-align: center;
     }
 
     .login-section button {
       padding: 14px;
       cursor: pointer;
-      background-color: #800000; /* Maroon */
+      background-color: #800000;
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -62,46 +62,59 @@
     }
 
     .players-section {
-      width: 90%; /* Adjusted width */
-      max-width: 1200px; /* Set a maximum width for larger screens */
+      width: 90%;
+      max-width: 1200px;
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden; /* Prevent content overflow */
-      margin-bottom: 20px; /* Add some space below the table */
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    /* Search bar styling */
+    .search-container {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .search-container input[type="text"] {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      width: 70%;
+      max-width: 400px;
+      font-size: 1rem;
     }
 
     h1, h2 {
       text-align: center;
-      color: #333; /* Darker heading color */
+      color: #333;
       margin-bottom: 20px;
     }
 
-    /* Table Styles */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      table-layout: fixed; /* Fixed table layout for better control */
+      table-layout: fixed;
     }
 
     th, td {
-      border: 1px solid #ddd; /* Lighter border color */
-      padding: 10px;
-      text-align: center; /* Center cell content */
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
       font-size: 0.9rem;
       overflow: hidden;
-      white-space: nowrap; /* Prevent text wrapping */
-      text-overflow: ellipsis; /* Ellipsis for overflowing text */
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     th {
       background-color: #f9f9f9;
-      font-weight: 600; /* Semi-bold header text */
+      font-weight: 600;
       color: #555;
     }
 
-    /* Zebra striping for improved readability */
     tbody tr:nth-child(even) {
       background-color: #f2f2f2;
     }
@@ -115,7 +128,7 @@
       padding: 10px 15px;
       margin: 0 5px;
       cursor: pointer;
-      background-color: #5cb85c; /* Bootstrap success color */
+      background-color: #5cb85c;
       color: white;
       border: none;
       border-radius: 4px;
@@ -130,7 +143,6 @@
       display: none;
     }
 
-    /* Actions Column Styling */
     .actions-column {
       text-align: center;
       white-space: nowrap;
@@ -146,12 +158,12 @@
     }
 
     .actions-column button.view {
-      background-color: #337ab7; /* Bootstrap primary color */
+      background-color: #337ab7;
       color: white;
     }
 
     .actions-column button.delete {
-      background-color: #d9534f; /* Bootstrap danger color */
+      background-color: #d9534f;
       color: white;
     }
 
@@ -163,7 +175,6 @@
       background-color: #c9302c;
     }
 
-
     /* Print Styles */
     @media print {
       body {
@@ -173,7 +184,7 @@
         padding: 0;
       }
 
-      .login-container, .pagination, .actions-column {
+      .login-container, .pagination, .actions-column, .search-container, .print-button-container {
         display: none !important;
       }
 
@@ -199,7 +210,6 @@
         background-color: #f2f2f2 !important;
       }
 
-      /* Fix for tables spanning pages: */
       table {
         page-break-inside: auto;
       }
@@ -222,16 +232,16 @@
     @media (max-width: 768px) {
       .players-section {
         width: 95%;
-        overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+        overflow-x: auto;
       }
 
       table {
-        table-layout: auto; /* Revert to auto layout for smaller screens */
+        table-layout: auto;
       }
 
       th, td {
-        white-space: normal; /* Allow text to wrap on smaller screens */
-        word-break: break-word; /* Break long words */
+        white-space: normal;
+        word-break: break-word;
         font-size: 0.7rem;
       }
 
@@ -240,9 +250,29 @@
       }
 
       .actions-column button {
-        display: block; /* Stack buttons vertically */
-        margin: 5px auto; /* Center buttons and add spacing */
+        display: block;
+        margin: 5px auto;
       }
+    }
+
+    /* Style for the print button container */
+    .print-button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .print-button {
+      padding: 10px 15px;
+      cursor: pointer;
+      background-color: #337ab7; /* Bootstrap primary color */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .print-button:hover {
+      background-color: #286090;
     }
   </style>
 </head>
@@ -259,6 +289,11 @@
 
   <div class="players-section hide">
     <h2>All Registered Players</h2>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search by player name...">
+    </div>
+
     <table id="playersTable">
       <thead>
         <tr>
@@ -283,6 +318,11 @@
       <button id="prevBtn" disabled>Previous</button>
       <button id="nextBtn" disabled>Next</button>
     </div>
+
+    <!-- Print Button Container -->
+    <div class="print-button-container">
+      <button class="print-button" onclick="printTable()">Print Table</button>
+    </div>
   </div>
 
   <script>
@@ -298,105 +338,92 @@
     const playersTableBody = document.querySelector('#playersTable tbody');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const searchInput = document.getElementById('searchInput');
 
     // Variables for pagination
     let currentPage = 1;
-    const pageSize = 25; // Increased page size
+    const pageSize = 25;
     let playersData = [];
+    let filteredPlayers = [];
 
     // Fetch players from localStorage
     function loadPlayers() {
       const data = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
       playersData = data;
+      filteredPlayers = [...playersData];
       renderTable();
     }
 
     // Render table with pagination
     function renderTable() {
-      // Calculate pagination
+      const searchTerm = searchInput.value.toLowerCase();
+      filteredPlayers = playersData.filter(player =>
+        player.name.toLowerCase().includes(searchTerm)
+      );
+
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-      const pagedPlayers = playersData.slice(startIndex, endIndex);
+      const pagedPlayers = filteredPlayers.slice(startIndex, endIndex);
 
-      // Clear existing rows
       playersTableBody.innerHTML = '';
 
-      // Populate table rows
       pagedPlayers.forEach((player, index) => {
         const row = document.createElement('tr');
 
-        // 1) Number
         const numberCell = document.createElement('td');
         numberCell.textContent = startIndex + index + 1;
 
-        // 2) Player name
         const nameCell = document.createElement('td');
         nameCell.textContent = player.name;
 
-        // 3) DOB
         const dobCell = document.createElement('td');
         dobCell.textContent = player.dob;
 
-        // 4) Player Phone
         const playerPhoneCell = document.createElement('td');
         playerPhoneCell.textContent = player.playerPhone || 'N/A';
 
-        // 5) Father/Guardian Phone
         const fatherPhoneCell = document.createElement('td');
         fatherPhoneCell.textContent = player.fatherPhone || 'N/A';
 
-        // 6) Training Suit Size
         const trainingSuitSizeCell = document.createElement('td');
         trainingSuitSizeCell.textContent = player.trainingSuitSize || 'N/A';
 
-        // 7) Jersey Size
         const jerseySizeCell = document.createElement('td');
         jerseySizeCell.textContent = player.jerseySize || 'N/A';
 
-        // 8) Sports Shoes Size
         const sportsShoesCell = document.createElement('td');
         sportsShoesCell.textContent = player.sportsShoesSize || 'N/A';
 
-        // 9) Bowling Shoes Size
         const bowlingShoesCell = document.createElement('td');
         bowlingShoesCell.textContent = player.bowlingShoesSize || 'N/A';
 
-        // 10) Ball Weight
         const ballWeightCell = document.createElement('td');
         ballWeightCell.textContent = player.ballWeight ? player.ballWeight + ' lbs' : 'N/A';
 
-        // 11) Actions
         const actionsCell = document.createElement('td');
         actionsCell.classList.add('actions-column');
 
-        // View Button
         const detailsBtn = document.createElement('button');
         detailsBtn.textContent = "View";
-        detailsBtn.classList.add('view'); // Added class for styling
+        detailsBtn.classList.add('view');
         detailsBtn.onclick = function() {
-          // Open detail page with player's ID in query string
           window.location.href = `playerdetail.html?id=${player.id}`;
         };
         actionsCell.appendChild(detailsBtn);
 
-        // Delete Button
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = "Delete";
-        deleteBtn.classList.add('delete'); // Added class for styling
+        deleteBtn.classList.add('delete');
         deleteBtn.onclick = function() {
           const confirmDelete = confirm("Are you sure you want to delete this player?");
           if (confirmDelete) {
-            // Remove this player from playersData
             playersData = playersData.filter(p => p.id !== player.id);
-            // Update localStorage
             localStorage.setItem('bowlingPlayers', JSON.stringify(playersData));
-            // Reload the table
             loadPlayers();
           }
         };
         actionsCell.appendChild(deleteBtn);
 
-        // Append cells to row
         row.appendChild(numberCell);
         row.appendChild(nameCell);
         row.appendChild(dobCell);
@@ -412,9 +439,8 @@
         playersTableBody.appendChild(row);
       });
 
-      // Handle next/prev buttons
       prevBtn.disabled = currentPage === 1;
-      nextBtn.disabled = endIndex >= playersData.length;
+      nextBtn.disabled = endIndex >= filteredPlayers.length;
     }
 
     // Event listeners for pagination
@@ -432,16 +458,24 @@
     loginBtn.addEventListener('click', () => {
       const inputPass = adminPasswordInput.value.trim();
       if (inputPass === ADMIN_PASSWORD) {
-        // Show players section
         playersSection.classList.remove('hide');
-        // Hide login section
         loginContainer.style.display = 'none';
-        // Load players data
         loadPlayers();
       } else {
         alert('Incorrect password! Please try again.');
       }
     });
+
+    // Search functionality
+    searchInput.addEventListener('keyup', () => {
+      currentPage = 1;
+      renderTable();
+    });
+
+    // Print functionality
+    function printTable() {
+      window.print();
+    }
   </script>
 </body>
 
