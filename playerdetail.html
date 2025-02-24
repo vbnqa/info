@@ -1,115 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Player Detail</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* BODY & GLOBAL STYLES */
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      max-width: 600px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      /* Subtle gradient background */
+      background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+      color: #333;
     }
+
+    /* WRAPPER for consistent centering and spacing */
+    .wrapper {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    /* TABLE STYLES */
     .detail-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .detail-table th, .detail-table td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      vertical-align: top;
+      margin: 0 auto 20px auto;
     }
     .detail-table th {
-      background-color: #f2f2f2;
-      width: 200px;
-    }
-    .photo-cell {
-      width: 150px;
+      background-color: #f7f7f7;
       text-align: center;
+      padding: 10px;
+      font-weight: 600;
+      border-bottom: 2px solid #ddd;
+    }
+    .detail-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      vertical-align: top;
+    }
+    /* Let the top row have a bit of a highlight */
+    .detail-table th[colspan="2"] {
+      font-size: 1.1rem;
+      background-color: #ececec;
+    }
+    /* Photo cell styling */
+    .photo-cell {
+      text-align: center;
+      border-right: 2px solid #ddd;
     }
     .player-photo {
       max-width: 100px;
       border: 1px solid #ccc;
-      margin: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
     }
+
+    /* PRINT BUTTON STYLES */
     .print-btn {
-      margin: 15px 0;
-      padding: 10px;
+      display: inline-block;
+      margin: 0 auto;
+      padding: 12px 20px;
       cursor: pointer;
       background-color: #2196F3;
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 1rem;
+      text-align: center;
+      transition: background-color 0.3s ease;
     }
     .print-btn:hover {
       background-color: #0b7dda;
     }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .wrapper {
+        margin: 20px;
+        padding: 10px;
+      }
+      .detail-table th, .detail-table td {
+        font-size: 0.9rem;
+        padding: 6px;
+      }
+      .player-photo {
+        max-width: 80px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Player Detail</h1>
+  <div class="wrapper">
+    <h1>Player Detail</h1>
 
-  <table class="detail-table" id="detailTable">
-    <tr>
-      <th colspan="2">Player Information</th>
-    </tr>
-    <tr>
-      <!-- Photo column, spanning multiple rows if desired -->
-      <td class="photo-cell" rowspan="11">
-        <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
-      </td>
-      <th>Name</th>
-    </tr>
-    <tr>
-      <td id="playerName"></td>
-    </tr>
-    <tr>
-      <th>Date of Birth</th>
-    </tr>
-    <tr>
-      <td id="playerDob"></td>
-    </tr>
-    <tr>
-      <th>Player Phone</th>
-    </tr>
-    <tr>
-      <td id="playerPhone"></td>
-    </tr>
-    <tr>
-      <th>Father/Guardian Phone</th>
-    </tr>
-    <tr>
-      <td id="fatherPhone"></td>
-    </tr>
-    <tr>
-      <th>Clothing Size (General)</th>
-    </tr>
-    <tr>
-      <td id="clothingSize"></td>
-    </tr>
-    <tr>
-      <th>Training Suit Size</th>
-      <td id="trainingSuitSize"></td>
-    </tr>
-    <tr>
-      <th>Jersey Size</th>
-      <td id="jerseySize"></td>
-    </tr>
-    <tr>
-      <th>Sports Shoes Size</th>
-      <td id="sportsShoesSize"></td>
-    </tr>
-    <tr>
-      <th>Bowling Shoes Size</th>
-      <td id="bowlingShoesSize"></td>
-    </tr>
-    <tr>
-      <th>Ball Weight (lbs)</th>
-      <td id="ballWeight"></td>
-    </tr>
-  </table>
+    <table class="detail-table" id="detailTable">
+      <tr>
+        <th colspan="2">Player Information</th>
+      </tr>
+      <tr>
+        <!-- Photo column, spanning multiple rows if desired -->
+        <td class="photo-cell" rowspan="11">
+          <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
+        </td>
+        <th>Name</th>
+      </tr>
+      <tr>
+        <td id="playerName"></td>
+      </tr>
+      <tr>
+        <th>Date of Birth</th>
+      </tr>
+      <tr>
+        <td id="playerDob"></td>
+      </tr>
+      <tr>
+        <th>Player Phone</th>
+      </tr>
+      <tr>
+        <td id="playerPhone"></td>
+      </tr>
+      <tr>
+        <th>Father/Guardian Phone</th>
+      </tr>
+      <tr>
+        <td id="fatherPhone"></td>
+      </tr>
+      <tr>
+        <th>Clothing Size (General)</th>
+      </tr>
+      <tr>
+        <td id="clothingSize"></td>
+      </tr>
+      <tr>
+        <th>Training Suit Size</th>
+        <td id="trainingSuitSize"></td>
+      </tr>
+      <tr>
+        <th>Jersey Size</th>
+        <td id="jerseySize"></td>
+      </tr>
+      <tr>
+        <th>Sports Shoes Size</th>
+        <td id="sportsShoesSize"></td>
+      </tr>
+      <tr>
+        <th>Bowling Shoes Size</th>
+        <td id="bowlingShoesSize"></td>
+      </tr>
+      <tr>
+        <th>Ball Weight (lbs)</th>
+        <td id="ballWeight"></td>
+      </tr>
+    </table>
 
-  <button class="print-btn" onclick="window.print()">Print</button>
+    <div style="text-align: center;">
+      <button class="print-btn" onclick="window.print()">Print</button>
+    </div>
+  </div>
 
   <script>
     // Extract player ID from URL
@@ -143,17 +202,4 @@
     }
   </script>
 </body>
-</html>
-<!DOCTYPE HTML>
-
-<html>
-
-<head>
-  <title>Untitled</title>
-</head>
-
-<body>
-
-</body>
-
 </html>
