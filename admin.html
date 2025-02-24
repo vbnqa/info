@@ -1,185 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin - Bowling Players</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            max-width: 800px;
-        }
-        .login-section, .players-section {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .pagination {
-            margin-top: 10px;
-        }
-        .pagination button {
-            padding: 8px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-        .hide {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Admin - Bowling Players</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; /* Adjusted margin for print */
+      padding: 20px; /* Added padding for better content spacing */
+      max-width: 100%; /* Ensure content fits the page */
+    }
+    h1, h2 {
+      text-align: center; /* Center the titles */
+    }
+    .login-section, .players-section {
+      margin-bottom: 20px;
+    }
+    .login-section label, .login-section input {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .login-section input {
+      width: 100%;
+      max-width: 300px;
+      padding: 8px;
+      margin-bottom: 10px; /* Add space for input */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px; /* Reduced padding */
+      text-align: left;
+      font-size: 0.8rem; /* Reduced font size */
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold; /* Emphasize the header */
+    }
+    .pagination {
+      margin-top: 10px;
+      text-align: center; /* Center pagination buttons */
+    }
+    .pagination button {
+      padding: 8px 12px;  /*Adjusted button padding*/
+      margin: 0 5px;
+      cursor: pointer;
+      background-color: #4CAF50;  /* Green color for buttons */
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .hide {
+      display: none;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 10pt; /* Adjust font size for print */
+        padding: 0; /* Remove default body padding in print */
+      }
+      .login-section, .pagination, .actions-column {
+        display: none !important; /* Hide these sections when printing */
+      }
+      h1, h2 {
+        text-align: left !important; /* Align headers to the left in print */
+      }
+      table {
+        width: 100% !important;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 10pt; /* Reduced font size */
+      }
+      th, td {
+        border: 1px solid #ccc;
+        padding: 3px;  /* Further reduced padding */
+        text-align: left;
+        font-size: 0.7rem; /* Further reduced font size */
+      }
+      th {
+        background-color: #f2f2f2 !important; /* Force background color in print */
+      }
+
+      /* Fix for tables spanning pages: */
+      table {
+         page-break-inside:auto;
+      }
+      tr    { page-break-inside:avoid; page-break-after:auto }
+      thead { display:table-header-group }
+      tfoot { display:table-footer-group }
+    }
+
+     .actions-column {
+      white-space: nowrap; /* Prevent wrapping */
+      width: 80px; /* Adjust the width as needed */
+    }
+  </style>
 </head>
 <body>
-    <h1>Admin Page - Registered Bowling Players</h1>
+  <h1>Admin Page - Registered Bowling Players</h1>
 
-    <div class="login-section">
-        <label for="adminPassword">Enter Admin Password:</label>
-        <input type="password" id="adminPassword">
-        <button id="loginBtn">Login</button>
+  <div class="login-section">
+    <label for="adminPassword">Enter Admin Password:</label>
+    <input type="password" id="adminPassword">
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <div class="players-section hide">
+    <h2>All Registered Players</h2>
+    <table id="playersTable">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Name</th>
+          <th>Date of Birth</th>
+          <th>Player Phone</th>
+          <th>Father/Guardian Phone</th>
+          <th>Training Suit</th>
+          <th>Jersey Size</th>
+          <th>Sports Shoes</th>
+          <th>Bowling Shoes</th>
+          <th>Ball Weight</th>
+          <th class="actions-column">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Player rows will be populated here -->
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button id="prevBtn" disabled>Previous</button>
+      <button id="nextBtn" disabled>Next</button>
     </div>
+  </div>
 
-    <div class="players-section hide">
-        <h2>All Registered Players</h2>
-        <table id="playersTable">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Player Phone</th>
-                    <th>Ball Weight</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Player rows will be populated here -->
-            </tbody>
-        </table>
-        <div class="pagination">
-            <button id="prevBtn" disabled>Previous</button>
-            <button id="nextBtn" disabled>Next</button>
-        </div>
-    </div>
+  <script>
+    // Simple demonstration password.
+    // For production, do secure server-side authentication.
+    const ADMIN_PASSWORD = "bowling123";
 
-    <script>
-        // Simple demonstration password.
-        // For production, do secure server-side authentication.
-        const ADMIN_PASSWORD = "bowling123";
+    const loginBtn = document.getElementById('loginBtn');
+    const adminPasswordInput = document.getElementById('adminPassword');
+    const playersSection = document.querySelector('.players-section');
 
-        const loginBtn = document.getElementById('loginBtn');
-        const adminPasswordInput = document.getElementById('adminPassword');
-        const playersSection = document.querySelector('.players-section');
+    const playersTableBody = document.querySelector('#playersTable tbody');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-        const playersTableBody = document.querySelector('#playersTable tbody');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+    // Variables for pagination
+    let currentPage = 1;
+    const pageSize = 25; // Increased page size
+    let playersData = [];
 
-        // Variables for pagination
-        let currentPage = 1;
-        const pageSize = 15; // 15 players per page
-        let playersData = [];
+    // Fetch players from localStorage
+    function loadPlayers() {
+      const data = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
+      playersData = data;
+      renderTable();
+    }
 
-        // Fetch players from localStorage
-        function loadPlayers() {
-            const data = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
-            playersData = data;
-            renderTable();
-        }
+    // Render table with pagination
+    function renderTable() {
+      // Calculate pagination
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const pagedPlayers = playersData.slice(startIndex, endIndex);
 
-        // Render table with pagination
-        function renderTable() {
-            // Calculate pagination
-            const startIndex = (currentPage - 1) * pageSize;
-            const endIndex = startIndex + pageSize;
-            const pagedPlayers = playersData.slice(startIndex, endIndex);
+      // Clear existing rows
+      playersTableBody.innerHTML = '';
 
-            // Clear existing rows
-            playersTableBody.innerHTML = '';
+      // Populate table rows
+      pagedPlayers.forEach((player, index) => {
+        const row = document.createElement('tr');
 
-            // Populate table rows
-            pagedPlayers.forEach((player, index) => {
-                const row = document.createElement('tr');
+        // 1) Number
+        const numberCell = document.createElement('td');
+        numberCell.textContent = startIndex + index + 1;
 
-                // 1) Number
-                const numberCell = document.createElement('td');
-                numberCell.textContent = startIndex + index + 1;
+        // 2) Player name
+        const nameCell = document.createElement('td');
+        nameCell.textContent = player.name;
 
-                // 2) Player name
-                const nameCell = document.createElement('td');
-                nameCell.textContent = player.name;
+        // 3) DOB
+        const dobCell = document.createElement('td');
+        dobCell.textContent = player.dob;
 
-                // 3) DOB
-                const dobCell = document.createElement('td');
-                dobCell.textContent = player.dob;
+        // 4) Player Phone
+        const playerPhoneCell = document.createElement('td');
+        playerPhoneCell.textContent = player.playerPhone || 'N/A';
 
-                // 4) Player Phone
-                const phoneCell = document.createElement('td');
-                phoneCell.textContent = player.playerPhone || 'N/A';
+        // 5) Father/Guardian Phone
+        const fatherPhoneCell = document.createElement('td');
+        fatherPhoneCell.textContent = player.fatherPhone || 'N/A';
 
-                // 5) Ball Weight
-                const ballWeightCell = document.createElement('td');
-                ballWeightCell.textContent = player.ballWeight ? player.ballWeight + ' lbs' : 'N/A';
+        // 6) Training Suit Size
+        const trainingSuitSizeCell = document.createElement('td');
+        trainingSuitSizeCell.textContent = player.trainingSuitSize || 'N/A';
 
-                // 6) Actions
-                const actionsCell = document.createElement('td');
-                const detailsBtn = document.createElement('button');
-                detailsBtn.textContent = "View";
-                detailsBtn.onclick = function() {
-                    // Open detail page with player's ID in query string
-                    window.location.href = `playerdetail.html?id=${player.id}`;
-                };
-                actionsCell.appendChild(detailsBtn);
+        // 7) Jersey Size
+        const jerseySizeCell = document.createElement('td');
+        jerseySizeCell.textContent = player.jerseySize || 'N/A';
 
-                // Append cells to row
-                row.appendChild(numberCell);
-                row.appendChild(nameCell);
-                row.appendChild(dobCell);
-                row.appendChild(phoneCell);
-                row.appendChild(ballWeightCell);
-                row.appendChild(actionsCell);
+        // 8) Sports Shoes Size
+        const sportsShoesCell = document.createElement('td');
+        sportsShoesCell.textContent = player.sportsShoesSize || 'N/A';
 
-                playersTableBody.appendChild(row);
-            });
+        // 9) Bowling Shoes Size
+        const bowlingShoesCell = document.createElement('td');
+        bowlingShoesCell.textContent = player.bowlingShoesSize || 'N/A';
 
-            // Handle next/prev buttons
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = endIndex >= playersData.length;
-        }
+        // 10) Ball Weight
+        const ballWeightCell = document.createElement('td');
+        ballWeightCell.textContent = player.ballWeight ? player.ballWeight + ' lbs' : 'N/A';
 
-        // Event listeners for pagination
-        prevBtn.addEventListener('click', () => {
-            currentPage--;
-            renderTable();
-        });
+        // 11) Actions
+        const actionsCell = document.createElement('td');
 
-        nextBtn.addEventListener('click', () => {
-            currentPage++;
-            renderTable();
-        });
+        // View Button
+        const detailsBtn = document.createElement('button');
+        detailsBtn.textContent = "View";
+        detailsBtn.onclick = function() {
+          // Open detail page with player's ID in query string
+          window.location.href = `playerdetail.html?id=${player.id}`;
+        };
+        actionsCell.appendChild(detailsBtn);
 
-        // Login functionality
-        loginBtn.addEventListener('click', () => {
-            const inputPass = adminPasswordInput.value.trim();
-            if (inputPass === ADMIN_PASSWORD) {
-                // Show players section
-                playersSection.classList.remove('hide');
-                // Hide login
-                document.querySelector('.login-section').classList.add('hide');
-                // Load players data
-                loadPlayers();
-            } else {
-                alert('Incorrect password! Please try again.');
-            }
-        });
-    </script>
+        // Delete Button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "Delete";
+        deleteBtn.style.marginLeft = "5px"; // Add some spacing
+        deleteBtn.onclick = function() {
+          const confirmDelete = confirm("Are you sure you want to delete this player?");
+          if (confirmDelete) {
+            // Remove this player from playersData
+            playersData = playersData.filter(p => p.id !== player.id);
+            // Update localStorage
+            localStorage.setItem('bowlingPlayers', JSON.stringify(playersData));
+            // Reload the table
+            loadPlayers();
+          }
+        };
+        actionsCell.appendChild(deleteBtn);
+
+        // Append cells to row
+        row.appendChild(numberCell);
+        row.appendChild(nameCell);
+        row.appendChild(dobCell);
+        row.appendChild(playerPhoneCell);
+        row.appendChild(fatherPhoneCell);
+        row.appendChild(trainingSuitSizeCell);
+        row.appendChild(jerseySizeCell);
+        row.appendChild(sportsShoesCell);
+        row.appendChild(bowlingShoesCell);
+        row.appendChild(ballWeightCell);
+        row.appendChild(actionsCell);
+
+        playersTableBody.appendChild(row);
+      });
+
+      // Handle next/prev buttons
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = endIndex >= playersData.length;
+    }
+
+    // Event listeners for pagination
+    prevBtn.addEventListener('click', () => {
+      currentPage--;
+      renderTable();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
+      renderTable();
+    });
+
+    // Login functionality
+    loginBtn.addEventListener('click', () => {
+      const inputPass = adminPasswordInput.value.trim();
+      if (inputPass === ADMIN_PASSWORD) {
+        // Show players section
+        playersSection.classList.remove('hide');
+        // Hide login
+        document.querySelector('.login-section').classList.add('hide');
+        // Load players data
+        loadPlayers();
+      } else {
+        alert('Incorrect password! Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>
