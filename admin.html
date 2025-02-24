@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Bowling Players</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 800px;
+        }
+        .login-section, .players-section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin-top: 10px;
+        }
+        .pagination button {
+            padding: 8px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Page - Registered Bowling Players</h1>
+
+    <div class="login-section">
+        <label for="adminPassword">Enter Admin Password:</label>
+        <input type="password" id="adminPassword">
+        <button id="loginBtn">Login</button>
+    </div>
+
+    <div class="players-section hide">
+        <h2>All Registered Players</h2>
+        <table id="playersTable">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Player Phone</th>
+                    <th>Ball Weight</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Player rows will be populated here -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevBtn" disabled>Previous</button>
+            <button id="nextBtn" disabled>Next</button>
+        </div>
+    </div>
+
+    <script>
+        // Simple demonstration password.
+        // For production, do secure server-side authentication.
+        const ADMIN_PASSWORD = "bowling123";
+
+        const loginBtn = document.getElementById('loginBtn');
+        const adminPasswordInput = document.getElementById('adminPassword');
+        const playersSection = document.querySelector('.players-section');
+
+        const playersTableBody = document.querySelector('#playersTable tbody');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Variables for pagination
+        let currentPage = 1;
+        const pageSize = 15; // 15 players per page
+        let playersData = [];
+
+        // Fetch players from localStorage
+        function loadPlayers() {
+            const data = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
+            playersData = data;
+            renderTable();
+        }
+
+        // Render table with pagination
+        function renderTable() {
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const pagedPlayers = playersData.slice(startIndex, endIndex);
+
+            // Clear existing rows
+            playersTableBody.innerHTML = '';
+
+            // Populate table rows
+            pagedPlayers.forEach((player, index) => {
+                const row = document.createElement('tr');
+
+                // 1) Number
+                const numberCell = document.createElement('td');
+                numberCell.textContent = startIndex + index + 1;
+
+                // 2) Player name
+                const nameCell = document.createElement('td');
+                nameCell.textContent = player.name;
+
+                // 3) DOB
+                const dobCell = document.createElement('td');
+                dobCell.textContent = player.dob;
+
+                // 4) Player Phone
+                const phoneCell = document.createElement('td');
+                phoneCell.textContent = player.playerPhone || 'N/A';
+
+                // 5) Ball Weight
+                const ballWeightCell = document.createElement('td');
+                ballWeightCell.textContent = player.ballWeight ? player.ballWeight + ' lbs' : 'N/A';
+
+                // 6) Actions
+                const actionsCell = document.createElement('td');
+                const detailsBtn = document.createElement('button');
+                detailsBtn.textContent = "View";
+                detailsBtn.onclick = function() {
+                    // Open detail page with player's ID in query string
+                    window.location.href = `playerdetail.html?id=${player.id}`;
+                };
+                actionsCell.appendChild(detailsBtn);
+
+                // Append cells to row
+                row.appendChild(numberCell);
+                row.appendChild(nameCell);
+                row.appendChild(dobCell);
+                row.appendChild(phoneCell);
+                row.appendChild(ballWeightCell);
+                row.appendChild(actionsCell);
+
+                playersTableBody.appendChild(row);
+            });
+
+            // Handle next/prev buttons
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = endIndex >= playersData.length;
+        }
+
+        // Event listeners for pagination
+        prevBtn.addEventListener('click', () => {
+            currentPage--;
+            renderTable();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentPage++;
+            renderTable();
+        });
+
+        // Login functionality
+        loginBtn.addEventListener('click', () => {
+            const inputPass = adminPasswordInput.value.trim();
+            if (inputPass === ADMIN_PASSWORD) {
+                // Show players section
+                playersSection.classList.remove('hide');
+                // Hide login
+                document.querySelector('.login-section').classList.add('hide');
+                // Load players data
+                loadPlayers();
+            } else {
+                alert('Incorrect password! Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

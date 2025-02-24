@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bowling Player Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 600px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: maroon;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #800000;
+        }
+
+        .thank-you {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bowling Player Registration</h1>
+    <form id="registrationForm">
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" name="playerName" required />
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required />
+
+        <!-- Phone Number Fields -->
+        <label for="playerPhone">Player Phone Number:</label>
+        <input type="tel" id="playerPhone" name="playerPhone" required />
+
+        <label for="fatherPhone">Father/Guardian Phone Number:</label>
+        <input type="tel" id="fatherPhone" name="fatherPhone" required />
+
+        <!-- Clothing Sizes -->
+        <label for="clothingSize">Clothing Size (General):</label>
+        <select id="clothingSize" name="clothingSize" required>
+            <option value="">-- Select Size --</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <label for="trainingSuitSize">Training Suit Size:</label>
+        <select id="trainingSuitSize" name="trainingSuitSize" required>
+            <option value="">-- Select Size --</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <label for="jerseySize">Jersey Size:</label>
+        <select id="jerseySize" name="jerseySize" required>
+            <option value="">-- Select Size --</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <label for="sportsShoesSize">Sports Shoes Size:</label>
+        <select id="sportsShoesSize" name="sportsShoesSize" required>
+            <option value="">-- Select Size --</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+        </select>
+
+        <label for="bowlingShoesSize">Bowling Shoes Size:</label>
+        <select id="bowlingShoesSize" name="bowlingShoesSize" required>
+            <option value="">-- Select Size --</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+        </select>
+
+        <label for="ballWeight">Ball Weight (lbs):</label>
+        <select id="ballWeight" name="ballWeight" required>
+            <option value="">-- Select Weight --</option>
+            <option value="8">8 lbs</option>
+            <option value="9">9 lbs</option>
+            <option value="10">10 lbs</option>
+            <option value="11">11 lbs</option>
+            <option value="12">12 lbs</option>
+            <option value="13">13 lbs</option>
+            <option value="14">14 lbs</option>
+            <option value="15">15 lbs</option>
+            <option value="16">16 lbs</option>
+        </select>
+
+        <label for="playerPhoto">Player Photo:</label>
+        <input type="file" id="playerPhoto" name="playerPhoto" accept="image/*" required />
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div id="thankYouMessage" class="thank-you" style="display:none;"></div>
+
+    <script>
+        const registrationForm = document.getElementById('registrationForm');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+
+        // Event listener for form submission
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const playerName = document.getElementById('playerName').value.trim();
+            const dob = document.getElementById('dob').value;
+            const playerPhone = document.getElementById('playerPhone').value;
+            const fatherPhone = document.getElementById('fatherPhone').value;
+            const clothingSize = document.getElementById('clothingSize').value;
+            const trainingSuitSize = document.getElementById('trainingSuitSize').value;
+            const jerseySize = document.getElementById('jerseySize').value;
+            const sportsShoesSize = document.getElementById('sportsShoesSize').value;
+            const bowlingShoesSize = document.getElementById('bowlingShoesSize').value;
+            const ballWeight = document.getElementById('ballWeight').value;
+            const playerPhoto = document.getElementById('playerPhoto').files[0];
+
+            if (!playerPhoto) {
+                alert('Please upload a photo.');
+                return;
+            }
+
+            // Read the photo as a base64 string
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const photoData = event.target.result;
+
+                // Construct player object
+                const newPlayer = {
+                    id: Date.now(),  // unique ID based on timestamp
+                    name: playerName,
+                    dob: dob,
+                    playerPhone: playerPhone,
+                    fatherPhone: fatherPhone,
+                    clothingSize: clothingSize,
+                    trainingSuitSize: trainingSuitSize,
+                    jerseySize: jerseySize,
+                    sportsShoesSize: sportsShoesSize,
+                    bowlingShoesSize: bowlingShoesSize,
+                    ballWeight: ballWeight,
+                    photo: photoData
+                };
+
+                // Retrieve existing players from localStorage
+                let players = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
+                // Push new player
+                players.push(newPlayer);
+
+                // Store back to localStorage
+                localStorage.setItem('bowlingPlayers', JSON.stringify(players));
+
+                // Display thank you message
+                thankYouMessage.textContent = `Thank you, ${playerName}, for registering!`;
+                thankYouMessage.style.display = 'block';
+
+                // Clear form
+                registrationForm.reset();
+            };
+
+            reader.readAsDataURL(playerPhoto);
+        });
+    </script>
+</body>
+</html>

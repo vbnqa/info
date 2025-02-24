@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      max-width: 600px;
+    }
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .detail-table th, .detail-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+    .detail-table th {
+      background-color: #f2f2f2;
+      width: 200px;
+    }
+    .photo-cell {
+      width: 150px;
+      text-align: center;
+    }
+    .player-photo {
+      max-width: 100px;
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+    .print-btn {
+      margin: 15px 0;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #2196F3;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+    .print-btn:hover {
+      background-color: #0b7dda;
+    }
+  </style>
+</head>
+<body>
+  <h1>Player Detail</h1>
+
+  <table class="detail-table" id="detailTable">
+    <tr>
+      <th colspan="2">Player Information</th>
+    </tr>
+    <tr>
+      <!-- Photo column, spanning multiple rows if desired -->
+      <td class="photo-cell" rowspan="11">
+        <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
+      </td>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <td id="playerName"></td>
+    </tr>
+    <tr>
+      <th>Date of Birth</th>
+    </tr>
+    <tr>
+      <td id="playerDob"></td>
+    </tr>
+    <tr>
+      <th>Player Phone</th>
+    </tr>
+    <tr>
+      <td id="playerPhone"></td>
+    </tr>
+    <tr>
+      <th>Father/Guardian Phone</th>
+    </tr>
+    <tr>
+      <td id="fatherPhone"></td>
+    </tr>
+    <tr>
+      <th>Clothing Size (General)</th>
+    </tr>
+    <tr>
+      <td id="clothingSize"></td>
+    </tr>
+    <tr>
+      <th>Training Suit Size</th>
+      <td id="trainingSuitSize"></td>
+    </tr>
+    <tr>
+      <th>Jersey Size</th>
+      <td id="jerseySize"></td>
+    </tr>
+    <tr>
+      <th>Sports Shoes Size</th>
+      <td id="sportsShoesSize"></td>
+    </tr>
+    <tr>
+      <th>Bowling Shoes Size</th>
+      <td id="bowlingShoesSize"></td>
+    </tr>
+    <tr>
+      <th>Ball Weight (lbs)</th>
+      <td id="ballWeight"></td>
+    </tr>
+  </table>
+
+  <button class="print-btn" onclick="window.print()">Print</button>
+
+  <script>
+    // Extract player ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const playerId = urlParams.get('id');
+
+    if (!playerId) {
+      alert('No player ID specified!');
+    } else {
+      // Fetch players from localStorage
+      const allPlayers = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
+      // Find the player with matching ID
+      const player = allPlayers.find(p => p.id.toString() === playerId);
+
+      if (!player) {
+        alert('Player not found!');
+      } else {
+        // Populate the table
+        document.getElementById('playerPhoto').src = player.photo;
+        document.getElementById('playerName').textContent = player.name;
+        document.getElementById('playerDob').textContent = player.dob;
+        document.getElementById('playerPhone').textContent = player.playerPhone || 'N/A';
+        document.getElementById('fatherPhone').textContent = player.fatherPhone || 'N/A';
+        document.getElementById('clothingSize').textContent = player.clothingSize || 'N/A';
+        document.getElementById('trainingSuitSize').textContent = player.trainingSuitSize || 'N/A';
+        document.getElementById('jerseySize').textContent = player.jerseySize || 'N/A';
+        document.getElementById('sportsShoesSize').textContent = player.sportsShoesSize || 'N/A';
+        document.getElementById('bowlingShoesSize').textContent = player.bowlingShoesSize || 'N/A';
+        document.getElementById('ballWeight').textContent = player.ballWeight ? player.ballWeight + ' lbs' : 'N/A';
+      }
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <title>Untitled</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
