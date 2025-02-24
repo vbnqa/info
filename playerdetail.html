@@ -11,27 +11,26 @@
       font-family: 'Open Sans', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      /* Subtle gradient background */
-      background-color: #f5f5f5; /* Light background for better print contrast */
+      background-color: #f5f5f5;
       color: #333;
     }
 
     /* PRINT STYLES - Ensure good printing results */
     @media print {
       body {
-        background: #fff !important; /* Force white background for printing */
-        color: #000 !important; /* Force black text for printing */
+        background: #fff !important;
+        color: #000 !important;
       }
       .wrapper {
-        box-shadow: none !important; /* Remove shadow on print */
-        margin: 0 !important;       /* Remove margins to fill the page */
+        box-shadow: none !important;
+        margin: 0 !important;
         padding: 0 !important;
+        display: block !important; /* Important for print layout */
       }
       .print-btn {
-        display: none !important;   /* Hide the print button */
+        display: none !important;
       }
 
-      /* Fix for tables spanning pages: */
       table {
          page-break-inside:auto;
       }
@@ -39,82 +38,94 @@
       thead { display:table-header-group }
       tfoot { display:table-footer-group }
 
+      .player-photo-container {
+        float: left !important; /* Force float left for print */
+        margin-right: 20px !important; /* Add space for the table */
+      }
+
     }
 
     /* WRAPPER for consistent centering and spacing */
     .wrapper {
       max-width: 700px;
-      margin: 20px auto; /* Reduced margin for better printing on A4 */
+      margin: 20px auto;
       padding: 20px;
       background-color: #fff;
-      border-radius: 5px; /* Reduced radius for cleaner print */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow for print */
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden; /* Important for floating layout */
+      display: flex;      /* Use flexbox for layout */
+      flex-direction: column; /* Stack elements vertically */
+      align-items: stretch;  /* Stretch items to fill the width */
     }
+
+    /* Photo styles */
+    .player-photo-container {
+      float: left; /* Float the image to the left */
+      margin-right: 20px; /* Add some space to the right */
+      width: 150px;      /* Set a fixed width */
+      margin-bottom: 20px; /* Add space between the photo and the title */
+    }
+
+    .player-photo {
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
 
     h1 {
       text-align: center;
       margin-top: 0;
-      margin-bottom: 20px; /* Added margin for spacing */
+      margin-bottom: 20px;
       font-weight: 600;
-      font-size: 1.8rem; /* Increased font size for better readability */
+      font-size: 1.8rem;
+      clear: both; /* Ensure the heading clears the floated image */
     }
 
     /* TABLE STYLES */
     .detail-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 0 auto;  /* Removed bottom margin for tighter layout */
+      margin: 0 auto;
     }
     .detail-table th {
-      background-color: #f0f0f0; /* Lighter background for print */
-      text-align: left; /* Aligned left for better readability */
-      padding: 8px;     /* Reduced padding for more compact layout */
+      background-color: #f0f0f0;
+      text-align: left;
+      padding: 8px;
       font-weight: 600;
-      border-bottom: 1px solid #ccc; /* Lighter border for print */
-      font-size: 0.95rem; /* Adjusted font size for better print fit */
+      border-bottom: 1px solid #ccc;
+      font-size: 0.95rem;
     }
     .detail-table td {
-      border: 1px solid #ccc;   /* Lighter border for print */
-      padding: 8px;       /* Reduced padding for more compact layout */
+      border: 1px solid #ccc;
+      padding: 8px;
       vertical-align: top;
-      font-size: 0.9rem;   /* Adjusted font size for better print fit */
+      font-size: 0.9rem;
     }
-    /* Let the top row have a bit of a highlight */
     .detail-table th[colspan="2"] {
       font-size: 1.1rem;
-      background-color: #e8e8e8;  /* Lighter background for print */
-      text-align: center;  /* Centered for header */
-    }
-    /* Photo cell styling */
-    .photo-cell {
+      background-color: #e8e8e8;
       text-align: center;
-      border-right: 1px solid #ccc; /* Lighter border for print */
-      width: 25%; /* Set a width for the photo cell */
-    }
-    .player-photo {
-      max-width: 100%; /* Allow image to fill the cell */
-      border: 1px solid #ccc;
-      margin: 5px 0; /* Reduced margin for compactness */
-      border-radius: 4px; /* Reduced radius for cleaner print */
-      display: block;      /* Ensures proper scaling */
-      margin-left: auto;  /* Center the image */
-      margin-right: auto;
     }
     .detail-table tr:nth-child(odd) {
-      background-color: #f9f9f9; /* subtle zebra striping */
+      background-color: #f9f9f9;
     }
 
     /* PRINT BUTTON STYLES */
     .print-btn {
       display: inline-block;
-      margin: 20px auto; /* Added top margin */
-      padding: 10px 16px; /* Reduced padding */
+      margin: 20px auto;
+      padding: 10px 16px;
       cursor: pointer;
       background-color: #2196F3;
       color: #fff;
       border: none;
-      border-radius: 4px; /* Reduced radius */
-      font-size: 0.9rem;  /* Reduced font size */
+      border-radius: 4px;
+      font-size: 0.9rem;
       text-align: center;
       transition: background-color 0.3s ease;
     }
@@ -122,7 +133,7 @@
       background-color: #0b7dda;
     }
 
-    /* Responsive Adjustments - Adjusted for smaller screens */
+    /* Responsive Adjustments */
     @media (max-width: 600px) {
       .wrapper {
         margin: 10px;
@@ -135,14 +146,18 @@
         font-size: 0.8rem;
         padding: 4px;
       }
-      .player-photo {
-        max-width: 70px;
+      .player-photo-container {
+        width: 100px;
+        margin-right: 10px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
+    <div class="player-photo-container">
+      <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
+    </div>
     <h1>Player Detail</h1>
 
     <table class="detail-table" id="detailTable">
@@ -153,77 +168,43 @@
       </thead>
       <tbody>
         <tr>
-          <!-- Photo column -->
-          <td class="photo-cell">
-            <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
-          </td>
           <th>Name</th>
-        </tr>
-        <tr>
-          <td></td> <!-- Empty cell to align with photo column-->
           <td id="playerName"></td>
         </tr>
         <tr>
           <th>Date of Birth</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="playerDob"></td>
         </tr>
         <tr>
           <th>Player Phone</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="playerPhone"></td>
         </tr>
         <tr>
           <th>Father/Guardian Phone</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="fatherPhone"></td>
         </tr>
         <tr>
           <th>Clothing Size (General)</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="clothingSize"></td>
         </tr>
         <tr>
           <th>Training Suit Size</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="trainingSuitSize"></td>
         </tr>
         <tr>
           <th>Jersey Size</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="jerseySize"></td>
         </tr>
         <tr>
           <th>Sports Shoes Size</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="sportsShoesSize"></td>
         </tr>
         <tr>
           <th>Bowling Shoes Size</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="bowlingShoesSize"></td>
         </tr>
         <tr>
           <th>Ball Weight (lbs)</th>
-        </tr>
-        <tr>
-          <td></td>
           <td id="ballWeight"></td>
         </tr>
       </tbody>
