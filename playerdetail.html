@@ -4,106 +4,139 @@
   <meta charset="UTF-8" />
   <title>Player Detail</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* GLOBAL STYLES */
+    /* BODY & GLOBAL STYLES */
     body {
-      font-family: 'Poppins', Arial, sans-serif;
+      font-family: 'Open Sans', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      /* Subtle gradient background */
+      background-color: #f5f5f5; /* Light background for better print contrast */
       color: #333;
-      line-height: 1.6;
     }
+
+    /* PRINT STYLES - Ensure good printing results */
+    @media print {
+      body {
+        background: #fff !important; /* Force white background for printing */
+        color: #000 !important; /* Force black text for printing */
+      }
+      .wrapper {
+        box-shadow: none !important; /* Remove shadow on print */
+        margin: 0 !important;       /* Remove margins to fill the page */
+        padding: 0 !important;
+      }
+      .print-btn {
+        display: none !important;   /* Hide the print button */
+      }
+
+      /* Fix for tables spanning pages: */
+      table {
+         page-break-inside:auto;
+      }
+      tr    { page-break-inside:avoid; page-break-after:auto }
+      thead { display:table-header-group }
+      tfoot { display:table-footer-group }
+
+    }
+
     /* WRAPPER for consistent centering and spacing */
     .wrapper {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
+      max-width: 700px;
+      margin: 20px auto; /* Reduced margin for better printing on A4 */
+      padding: 20px;
       background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 5px; /* Reduced radius for cleaner print */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow for print */
     }
+
     h1 {
       text-align: center;
       margin-top: 0;
+      margin-bottom: 20px; /* Added margin for spacing */
       font-weight: 600;
-      color: #2c3e50;
-      letter-spacing: 1px;
+      font-size: 1.8rem; /* Increased font size for better readability */
     }
+
     /* TABLE STYLES */
     .detail-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px auto;
+      margin: 0 auto;  /* Removed bottom margin for tighter layout */
     }
     .detail-table th {
-      background-color: #f9fafb;
-      text-align: left;
-      padding: 12px 15px;
+      background-color: #f0f0f0; /* Lighter background for print */
+      text-align: left; /* Aligned left for better readability */
+      padding: 8px;     /* Reduced padding for more compact layout */
       font-weight: 600;
-      color: #34495e;
-      border-bottom: 2px solid #eaeaea;
+      border-bottom: 1px solid #ccc; /* Lighter border for print */
+      font-size: 0.95rem; /* Adjusted font size for better print fit */
     }
     .detail-table td {
-      border: none;
-      padding: 12px 15px;
+      border: 1px solid #ccc;   /* Lighter border for print */
+      padding: 8px;       /* Reduced padding for more compact layout */
       vertical-align: top;
-      color: #555;
+      font-size: 0.9rem;   /* Adjusted font size for better print fit */
     }
-    /* Highlighted Header Row */
+    /* Let the top row have a bit of a highlight */
     .detail-table th[colspan="2"] {
-      font-size: 1.2rem;
-      background-color: #ecf0f1;
-      color: #2c3e50;
-      text-align: center;
-      border-radius: 8px 8px 0 0;
+      font-size: 1.1rem;
+      background-color: #e8e8e8;  /* Lighter background for print */
+      text-align: center;  /* Centered for header */
     }
-    /* Photo Cell Styling */
+    /* Photo cell styling */
     .photo-cell {
       text-align: center;
-      border-right: 2px solid #eaeaea;
+      border-right: 1px solid #ccc; /* Lighter border for print */
+      width: 25%; /* Set a width for the photo cell */
     }
     .player-photo {
-      max-width: 120px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      margin: 10px 0;
-      transition: transform 0.3s ease;
+      max-width: 100%; /* Allow image to fill the cell */
+      border: 1px solid #ccc;
+      margin: 5px 0; /* Reduced margin for compactness */
+      border-radius: 4px; /* Reduced radius for cleaner print */
+      display: block;      /* Ensures proper scaling */
+      margin-left: auto;  /* Center the image */
+      margin-right: auto;
     }
-    .player-photo:hover {
-      transform: scale(1.1);
+    .detail-table tr:nth-child(odd) {
+      background-color: #f9f9f9; /* subtle zebra striping */
     }
+
     /* PRINT BUTTON STYLES */
     .print-btn {
       display: inline-block;
-      margin: 20px auto;
-      padding: 14px 24px;
+      margin: 20px auto; /* Added top margin */
+      padding: 10px 16px; /* Reduced padding */
       cursor: pointer;
-      background-color: #3498db;
+      background-color: #2196F3;
       color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 4px; /* Reduced radius */
+      font-size: 0.9rem;  /* Reduced font size */
       text-align: center;
       transition: background-color 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .print-btn:hover {
-      background-color: #2980b9;
+      background-color: #0b7dda;
     }
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
+
+    /* Responsive Adjustments - Adjusted for smaller screens */
+    @media (max-width: 600px) {
       .wrapper {
-        margin: 20px;
-        padding: 20px;
-      }
-      .detail-table th, .detail-table td {
-        font-size: 0.9rem;
+        margin: 10px;
         padding: 10px;
       }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .detail-table th, .detail-table td {
+        font-size: 0.8rem;
+        padding: 4px;
+      }
       .player-photo {
-        max-width: 100px;
+        max-width: 70px;
       }
     }
   </style>
@@ -111,73 +144,101 @@
 <body>
   <div class="wrapper">
     <h1>Player Detail</h1>
+
     <table class="detail-table" id="detailTable">
-      <tr>
-        <th colspan="2">Player Information</th>
-      </tr>
-      <tr>
-        <!-- Photo column -->
-        <td class="photo-cell" rowspan="11">
-          <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
-        </td>
-        <th>Name</th>
-      </tr>
-      <tr>
-        <td id="playerName"></td>
-      </tr>
-      <tr>
-        <th>Date of Birth</th>
-      </tr>
-      <tr>
-        <td id="playerDob"></td>
-      </tr>
-      <tr>
-        <th>Player Phone</th>
-      </tr>
-      <tr>
-        <td id="playerPhone"></td>
-      </tr>
-      <tr>
-        <th>Father/Guardian Phone</th>
-      </tr>
-      <tr>
-        <td id="fatherPhone"></td>
-      </tr>
-      <tr>
-        <th>Clothing Size (General)</th>
-      </tr>
-      <tr>
-        <td id="clothingSize"></td>
-      </tr>
-      <tr>
-        <th>Training Suit Size</th>
-        <td id="trainingSuitSize"></td>
-      </tr>
-      <tr>
-        <th>Jersey Size</th>
-        <td id="jerseySize"></td>
-      </tr>
-      <tr>
-        <th>Sports Shoes Size</th>
-        <td id="sportsShoesSize"></td>
-      </tr>
-      <tr>
-        <th>Bowling Shoes Size</th>
-        <td id="bowlingShoesSize"></td>
-      </tr>
-      <tr>
-        <th>Ball Weight (lbs)</th>
-        <td id="ballWeight"></td>
-      </tr>
+      <thead>
+        <tr>
+          <th colspan="2">Player Information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <!-- Photo column -->
+          <td class="photo-cell">
+            <img id="playerPhoto" src="" alt="Player Photo" class="player-photo">
+          </td>
+          <th>Name</th>
+        </tr>
+        <tr>
+          <td></td> <!-- Empty cell to align with photo column-->
+          <td id="playerName"></td>
+        </tr>
+        <tr>
+          <th>Date of Birth</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="playerDob"></td>
+        </tr>
+        <tr>
+          <th>Player Phone</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="playerPhone"></td>
+        </tr>
+        <tr>
+          <th>Father/Guardian Phone</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="fatherPhone"></td>
+        </tr>
+        <tr>
+          <th>Clothing Size (General)</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="clothingSize"></td>
+        </tr>
+        <tr>
+          <th>Training Suit Size</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="trainingSuitSize"></td>
+        </tr>
+        <tr>
+          <th>Jersey Size</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="jerseySize"></td>
+        </tr>
+        <tr>
+          <th>Sports Shoes Size</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="sportsShoesSize"></td>
+        </tr>
+        <tr>
+          <th>Bowling Shoes Size</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="bowlingShoesSize"></td>
+        </tr>
+        <tr>
+          <th>Ball Weight (lbs)</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td id="ballWeight"></td>
+        </tr>
+      </tbody>
     </table>
+
     <div style="text-align: center;">
       <button class="print-btn" onclick="window.print()">Print</button>
     </div>
   </div>
+
   <script>
     // Extract player ID from URL
     const urlParams = new URLSearchParams(window.location.search);
     const playerId = urlParams.get('id');
+
     if (!playerId) {
       alert('No player ID specified!');
     } else {
@@ -185,6 +246,7 @@
       const allPlayers = JSON.parse(localStorage.getItem('bowlingPlayers')) || [];
       // Find the player with matching ID
       const player = allPlayers.find(p => p.id.toString() === playerId);
+
       if (!player) {
         alert('Player not found!');
       } else {
