@@ -13,6 +13,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      flex-direction: column; /* Ensure content stacks vertically */
     }
 
     .login-container {
@@ -22,6 +23,7 @@
       padding: 30px;
       text-align: center;
       width: 400px;
+      margin-bottom: 20px; /* Add space between login and table */
     }
 
     .login-section label {
@@ -60,55 +62,107 @@
     }
 
     .players-section {
-      max-width: 100%; /* Adjusted max-width to prevent horizontal overflow */
-      margin: 20px auto; /* Center the players section */
-      padding: 20px;
+      width: 90%; /* Adjusted width */
+      max-width: 1200px; /* Set a maximum width for larger screens */
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      overflow: hidden; /* Prevent content overflow */
+      margin-bottom: 20px; /* Add some space below the table */
     }
 
     h1, h2 {
       text-align: center;
+      color: #333; /* Darker heading color */
+      margin-bottom: 20px;
     }
 
+    /* Table Styles */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
+      table-layout: fixed; /* Fixed table layout for better control */
     }
 
     th, td {
-      border: 1px solid #ccc;
-      padding: 5px;
-      text-align: left;
-      font-size: 0.8rem;
+      border: 1px solid #ddd; /* Lighter border color */
+      padding: 10px;
+      text-align: center; /* Center cell content */
+      font-size: 0.9rem;
+      overflow: hidden;
+      white-space: nowrap; /* Prevent text wrapping */
+      text-overflow: ellipsis; /* Ellipsis for overflowing text */
     }
 
     th {
+      background-color: #f9f9f9;
+      font-weight: 600; /* Semi-bold header text */
+      color: #555;
+    }
+
+    /* Zebra striping for improved readability */
+    tbody tr:nth-child(even) {
       background-color: #f2f2f2;
-      font-weight: bold;
     }
 
     .pagination {
-      margin-top: 10px;
+      margin-top: 20px;
       text-align: center;
     }
 
     .pagination button {
-      padding: 8px 12px;
+      padding: 10px 15px;
       margin: 0 5px;
       cursor: pointer;
-      background-color: #4CAF50;
+      background-color: #5cb85c; /* Bootstrap success color */
       color: white;
       border: none;
       border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .pagination button:hover {
+      background-color: #4cae4c;
     }
 
     .hide {
       display: none;
     }
+
+    /* Actions Column Styling */
+    .actions-column {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .actions-column button {
+      padding: 8px 12px;
+      margin: 0 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .actions-column button.view {
+      background-color: #337ab7; /* Bootstrap primary color */
+      color: white;
+    }
+
+    .actions-column button.delete {
+      background-color: #d9534f; /* Bootstrap danger color */
+      color: white;
+    }
+
+    .actions-column button.view:hover {
+      background-color: #286090;
+    }
+
+    .actions-column button.delete:hover {
+      background-color: #c9302c;
+    }
+
 
     /* Print Styles */
     @media print {
@@ -119,7 +173,7 @@
         padding: 0;
       }
 
-      .login-section, .pagination, .actions-column {
+      .login-container, .pagination, .actions-column {
         display: none !important;
       }
 
@@ -164,35 +218,31 @@
       }
     }
 
-    .actions-column {
-      white-space: nowrap;
-      width: 80px;
-    }
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .players-section {
+        width: 95%;
+        overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+      }
 
-      /* Adjustments for smaller screens */
-    @media (max-width: 600px) {
-        .login-container {
-            width: 90%;
-        }
+      table {
+        table-layout: auto; /* Revert to auto layout for smaller screens */
+      }
 
-        .players-section {
-            margin: 10px auto;
-            padding: 10px;
-        }
+      th, td {
+        white-space: normal; /* Allow text to wrap on smaller screens */
+        word-break: break-word; /* Break long words */
+        font-size: 0.7rem;
+      }
 
-        h1 {
-            font-size: 1.5em;
-        }
+      .actions-column {
+        white-space: normal;
+      }
 
-        th, td {
-            padding: 3px;
-            font-size: 0.7rem;
-        }
-
-        .pagination button {
-            padding: 6px 10px;
-            margin: 0 3px;
-        }
+      .actions-column button {
+        display: block; /* Stack buttons vertically */
+        margin: 5px auto; /* Center buttons and add spacing */
+      }
     }
   </style>
 </head>
@@ -317,10 +367,12 @@
 
         // 11) Actions
         const actionsCell = document.createElement('td');
+        actionsCell.classList.add('actions-column');
 
         // View Button
         const detailsBtn = document.createElement('button');
         detailsBtn.textContent = "View";
+        detailsBtn.classList.add('view'); // Added class for styling
         detailsBtn.onclick = function() {
           // Open detail page with player's ID in query string
           window.location.href = `playerdetail.html?id=${player.id}`;
@@ -330,7 +382,7 @@
         // Delete Button
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = "Delete";
-        deleteBtn.style.marginLeft = "5px"; // Add some spacing
+        deleteBtn.classList.add('delete'); // Added class for styling
         deleteBtn.onclick = function() {
           const confirmDelete = confirm("Are you sure you want to delete this player?");
           if (confirmDelete) {
@@ -392,4 +444,5 @@
     });
   </script>
 </body>
+
 </html>
